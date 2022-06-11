@@ -1,8 +1,6 @@
 # FluentLayout
 
-FluentLayout provides an easy, fluent API for creating constraint-based layouts in Xamarin.iOS.
-
-[![Build Status](https://app.bitrise.io/app/3584ad3a37e4084c/status.svg?token=nxuhVtDms232YxvcvYIW0w&branch=main)](https://app.bitrise.io/app/3584ad3a37e4084c)
+FluentLayout provides an easy, fluent API for creating constraint-based layouts in maui iOS.
 
 ## How To Use
 

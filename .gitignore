@@ -33,3 +33,4 @@ packages/
 .fake/
 dist/
 .vs/
+.idea/
