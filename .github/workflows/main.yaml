@@ -16,24 +16,20 @@ jobs:
       NUPKG_MAJOR: 1.0.0
 #      CODESIGN_PFX: ${{ secrets.CODESIGN_PFX }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 6.0.x
       - name: Setup NuGet
         uses: nuget/setup-nuget@v1
         with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
           nuget-version: latest
-      - name: Setup MAUI
-        shell: pwsh
-        run: |
-          & dotnet tool update --global redth.net.maui.check
-          & maui-check --preview --ci --non-interactive --fix --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+      - name: Install MAUI workload
+        run: dotnet workload install maui
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build -c Release
       - name: Package NuGets
         shell: pwsh
         run: |
@@ -45,31 +41,30 @@ jobs:
           echo "PACKAGE VERSION: $VERSION"
           
           New-Item -ItemType Directory -Force -Path .\artifacts
-          dotnet pack --output ./artifacts --configuration Release -p:PackageVersion=$VERSION ./Vapolia.FluentLayouts/Vapolia.FluentLayouts.csproj
+          dotnet pack --output ./artifacts -c Release -p:PackageVersion=$VERSION
 #$pfxPath = Join-Path -Path $pwd -ChildPath "codesigncert.pfx"
 #[IO.File]::WriteAllBytes("$pfxPath", [System.Convert]::FromBase64String($env:CODESIGN_PFX))
 #nuget sign .\artifacts\*.nupkg -CertificatePath $pfxPath -Timestamper http://timestamp.entrust.net/TSS/RFC3161sha2TS
 
       - name: Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: NuGet
+          name: nupkg
           path: ./artifacts
 
   publish:
     name: Publish
     needs: build
     runs-on: windows-latest
-    if: github.event_name == 'release'
+#    if: github.event_name == 'release'
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: NuGet
+          name: nupkg
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
-      - name: Push NuGet
-        run: |
-          dotnet nuget push NuGet/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NuGetAPIKey }}
+          dotnet-version: 6.0.x
+      - name: Push to nuget
+        run: dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NuGetAPIKey }}
