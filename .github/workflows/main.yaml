@@ -14,23 +14,25 @@ jobs:
     runs-on: windows-latest
     environment: Default
     env:
-      NUPKG_MAJOR: 1.0.0
+      NUPKG_MAJOR: 1.0.1
 #      CODESIGN_PFX: ${{ secrets.CODESIGN_PFX }}
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
+
       - name: Setup NuGet
         uses: nuget/setup-nuget@v1
         with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
           nuget-version: latest
-      - name: Install MAUI workload
-        run: dotnet workload install maui
+
       - name: Build
         run: dotnet build -c Release
+
       - name: Package NuGets
         shell: pwsh
         run: |
@@ -64,9 +66,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: nupkg
+      
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
+          
       - name: Push to nuget
         run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NuGetAPIKey }}

@@ -1,5 +1,3 @@
-using UIKit;
-
 namespace Vapolia.FluentLayouts;
 
 public static class FluentLayoutExtensions

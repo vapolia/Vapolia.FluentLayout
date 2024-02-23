@@ -1,6 +1,4 @@
 using System.Runtime.InteropServices;
-using Foundation;
-using UIKit;
 
 namespace Vapolia.FluentLayouts;
 

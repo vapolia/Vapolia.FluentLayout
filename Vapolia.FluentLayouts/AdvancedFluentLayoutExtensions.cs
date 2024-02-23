@@ -1,5 +1,4 @@
 using System.Runtime.InteropServices;
-using UIKit;
 using Vapolia.FluentLayouts.Extensions;
 
 namespace Vapolia.FluentLayouts;
