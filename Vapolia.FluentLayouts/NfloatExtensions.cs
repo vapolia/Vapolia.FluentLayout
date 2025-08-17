@@ -1,10 +1,8 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Vapolia.FluentLayouts;
+﻿namespace Vapolia.FluentLayouts;
 
 internal static class NfloatExtensions
 {
-	public static NFloat GetValueOrDefault(this NFloat? value) => value.GetValueOrDefault(0);
+	public static nfloat GetValueOrDefault(this nfloat? value) => value.GetValueOrDefault(0);
 
-	public static NFloat GetValueOrDefault(this NFloat? value, NFloat defaultValue) => value ?? defaultValue;
+	public static nfloat GetValueOrDefault(this nfloat? value, nfloat defaultValue) => value ?? defaultValue;
 }

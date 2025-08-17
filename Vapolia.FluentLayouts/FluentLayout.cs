@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Vapolia.FluentLayouts;
 
 public class FluentLayout
@@ -23,7 +21,7 @@ public class FluentLayout
 	public FluentLayout(UIView view,
 		NSLayoutAttribute attribute,
 		NSLayoutRelation relation,
-		NFloat constant = default)
+		nfloat constant = default)
 	{
 		Constraint = new(CreateConstraint);
 		View = view;
@@ -35,63 +33,63 @@ public class FluentLayout
 
 	public UIView View { get; }
 
-	public NFloat Multiplier { get; private set; } = 1f;
+	public nfloat Multiplier { get; internal set; } = 1f;
 
-	private NFloat _constant;
-	public NFloat Constant 
+	private nfloat constant;
+	public nfloat Constant 
 	{ 
-		get => _constant;
+		get => constant;
 		set
 		{
-			_constant = value;
+			constant = value;
 
 			if (Constraint.IsValueCreated)
-				Constraint.Value.Constant = _constant;
+				Constraint.Value.Constant = constant;
 		}
 	}
 
-	private float _priority;
+	private float priority;
 	public float Priority 
 	{ 
-		get { return _priority; }
+		get => priority;
 		set
 		{
-			_priority = value;
+			priority = value;
 
 			if (Constraint.IsValueCreated)
-				Constraint.Value.Priority = _priority;
+				Constraint.Value.Priority = priority;
 		}
 	}
 
-	private bool _active = true;
+	private bool active = true;
 	public bool Active
 	{
-		get => _active;
+		get => active;
 		set
 		{
-			_active = value;
+			active = value;
 
 			if (Constraint.IsValueCreated)
-				Constraint.Value.Active = _active;
+				Constraint.Value.Active = active;
 		}
 	}
 
-	private string _identifier;
-	public string Identifier
+	private string? identifier;
+	public string? Identifier
 	{
-		get => _identifier;
+		get => identifier;
 		set
 		{
-			_identifier = value;
+			identifier = value;
 
 			if (Constraint.IsValueCreated)
-				Constraint.Value.SetIdentifier(_identifier);
+				Constraint.Value.SetIdentifier(identifier);
 		}
 	}
 
 	public NSLayoutAttribute Attribute { get; }
 	public NSLayoutRelation Relation { get; }
-	public NSObject SecondItem { get; private set; }
+	public NSObject? SecondItem { get; private set; }
 	public NSLayoutAttribute SecondAttribute { get; private set; }
 
 	internal Lazy<NSLayoutConstraint> Constraint { get; }
@@ -114,47 +112,6 @@ public class FluentLayout
 		return constraint;
 	}
 
-	public FluentLayout Plus(NFloat constant)
-	{
-		Constant += constant;
-		return this;
-	}
-
-	public FluentLayout Minus(NFloat constant)
-	{
-		Constant -= constant;
-		return this;
-	}
-
-	public FluentLayout WithMultiplier(NFloat multiplier)
-	{
-		Multiplier = multiplier;
-		return this;
-	}
-
-	public FluentLayout SetPriority(float priority)
-	{
-		Priority = priority;
-		return this;
-	}
-
-	public FluentLayout SetPriority(UILayoutPriority priority)
-	{
-		Priority = (float) priority;
-		return this;
-	}
-
-	public FluentLayout SetActive(bool active)
-	{
-		Active = active;
-		return this;
-	}
-
-	public FluentLayout WithIdentifier(string identifier)
-	{
-		Identifier = identifier;
-		return this;
-	}
 
 	public FluentLayout LeftOf(NSObject view2) => SetSecondItem(view2, NSLayoutAttribute.Left);
 
@@ -204,5 +161,50 @@ public class FluentLayout
 	public IEnumerable<NSLayoutConstraint> ToLayoutConstraints()
 	{
 		yield return Constraint.Value;
+	}
+}
+
+public static class FluentLayoutExtensions2
+{
+	public static FluentLayout Plus(this FluentLayout s, nfloat constant)
+	{
+		s.Constant += constant;
+		return s;
+	}
+
+	public static FluentLayout Minus(this FluentLayout s, nfloat constant)
+	{
+		s.Constant -= constant;
+		return s;
+	}
+
+	public static FluentLayout WithMultiplier(this FluentLayout s, nfloat multiplier)
+	{
+		s.Multiplier = multiplier;
+		return s;
+	}
+
+	public static FluentLayout SetPriority(this FluentLayout s, float priority)
+	{
+		s.Priority = priority;
+		return s;
+	}
+
+	public static FluentLayout SetPriority(this FluentLayout s, UILayoutPriority priority)
+	{
+		s.Priority = (float) priority;
+		return s;
+	}
+
+	public static FluentLayout SetActive(this FluentLayout s, bool active)
+	{
+		s.Active = active;
+		return s;
+	}
+
+	public static FluentLayout WithIdentifier(this FluentLayout s, string identifier)
+	{
+		s.Identifier = identifier;
+		return s;
 	}
 }

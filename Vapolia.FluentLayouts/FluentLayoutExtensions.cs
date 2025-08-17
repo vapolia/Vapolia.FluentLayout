@@ -44,7 +44,7 @@ public static class FluentLayoutExtensions
 
 	public static void AddConstraints(this UIView view, IEnumerable<FluentLayout> fluentLayouts) =>
 		view.AddConstraints(fluentLayouts
-			.Where(fluent => fluent != null)
+			.Where(fluent => fluent != null!)
 			.Select(fluent => fluent.Constraint.Value)
 			.ToArray());
 
@@ -52,7 +52,7 @@ public static class FluentLayoutExtensions
 
 	public static void RemoveConstraints(this UIView view, IEnumerable<FluentLayout> fluentLayouts) =>
 		view.RemoveConstraints(fluentLayouts
-			.Where(fluent => fluent != null)
+			.Where(fluent => fluent != null!)
 			.Select(fluent => fluent.Constraint.Value)
 			.ToArray());
 }

@@ -139,9 +139,9 @@ public static class AdvancedFluentLayoutExtensions
 	public static IEnumerable<FluentLayout> FullSizeOf(this UIView view, UIView parent, NFloat? margin = null) => 
 		FullSizeOf(view, parent, new Margins((float)margin.GetValueOrDefault(DefaultMargin)));
 
-	public static IEnumerable<FluentLayout> FullSizeOf(this UIView view, UIView parent, Margins margins)
+	public static IEnumerable<FluentLayout> FullSizeOf(this UIView view, UIView parent, Margins? margins)
 	{
-		margins = margins ?? new Margins();
+		margins ??= new Margins();
 
 		return new List<FluentLayout>
 		{
@@ -152,8 +152,8 @@ public static class AdvancedFluentLayoutExtensions
 		};
 	}
 
-	public static FluentLayout GetLayoutById(this IEnumerable<FluentLayout> layouts, string identifier) => 
-		layouts.FirstOrDefault(x => x.Identifier.Equals(identifier));
+	public static FluentLayout? GetLayoutById(this IEnumerable<FluentLayout> layouts, string identifier) => 
+		layouts.FirstOrDefault(x => x.Identifier?.Equals(identifier) == true);
 
 	public static IEnumerable<FluentLayout> VerticalStackPanelConstraints(this UIView parentView, Margins margins, params UIView[] views) =>
 		AdvancedVerticalStackPanelConstraints(parentView, margins, views: views);
@@ -171,14 +171,14 @@ public static class AdvancedFluentLayoutExtensions
 	/// );
 	/// </summary>
 	public static IEnumerable<FluentLayout> AdvancedVerticalStackPanelConstraints(this UIView parentView,
-		Margins margins,
-		float[] childrenLeftMargins = null,
-		float[] childrenTopMargins = null,
-		float[] childrenRightMargins = null,
+		Margins? margins,
+		float[]? childrenLeftMargins = null,
+		float[]? childrenTopMargins = null,
+		float[]? childrenRightMargins = null,
 		float marginMultiplier = 1,
 		params UIView[] views)
 	{
-		string previousIdentifierPrefix = null;
+		string? previousIdentifierPrefix = null;
 		margins ??= new();
 		var layouts = new List<FluentLayout>();
 

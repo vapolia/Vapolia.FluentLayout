@@ -2,7 +2,7 @@
 
 internal static class ArrayExtensions
 {
-	public static bool TryGetElement<T>(this T[] array, int index, out T element)
+	public static bool TryGetElement<T>(this T[]? array, int index, out T? element)
 	{
 		if (array == null)
 		{

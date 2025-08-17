@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Vapolia.FluentLayouts;
 
 public class UIViewAndLayoutAttribute
@@ -13,12 +11,12 @@ public class UIViewAndLayoutAttribute
     public UIView View { get; }
     public NSLayoutAttribute Attribute { get; }
 
-    public FluentLayout EqualTo(NFloat constant = default) =>
+    public FluentLayout EqualTo(nfloat constant = default) =>
         new (View, Attribute, NSLayoutRelation.Equal, constant);
 
-    public FluentLayout GreaterThanOrEqualTo(NFloat constant = default) =>
+    public FluentLayout GreaterThanOrEqualTo(nfloat constant = default) =>
         new (View, Attribute, NSLayoutRelation.GreaterThanOrEqual, constant);
 
-    public FluentLayout LessThanOrEqualTo(NFloat constant = default) =>
+    public FluentLayout LessThanOrEqualTo(nfloat constant = default) =>
         new (View, Attribute, NSLayoutRelation.LessThanOrEqual, constant);
 }
