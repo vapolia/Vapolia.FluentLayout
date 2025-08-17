@@ -2,6 +2,17 @@
 
 FluentLayout provides an easy, fluent API for creating constraint-based layouts in maui iOS.
 
+[![NuGet Xamarin](https://img.shields.io/nuget/vpre/Vapolia.FluentLayouts.svg?style=for-the-badge)](https://www.nuget.org/packages/Vapolia.FluentLayouts)  
+![Nuget](https://img.shields.io/nuget/dt/Vapolia.FluentLayouts)
+
+## Installation
+
+```xml
+    <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios' OR $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
+      <PackageReference Include="Vapolia.FluentLayouts" Version="5.0.0" />
+    </ItemGroup>
+```
+
 ## How To Use
 
 The best way to see FluentLayout in action is to check out the `QuickLayout.Touch` sample project, which contains many examples of creating a variety of layouts.
