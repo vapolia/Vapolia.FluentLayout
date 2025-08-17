@@ -10,7 +10,7 @@ jobs:
     name: Build
     runs-on: windows-latest
     env:
-      NUPKG_MAJOR: 5.0.0
+      NUPKG_MAJOR: 5.0.1
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
       PROJECT: Vapolia.FluentLayouts/Vapolia.FluentLayouts.csproj
